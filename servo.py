@@ -3,6 +3,7 @@
 import RPi.GPIO as GPIO
 import time
 
+pwm = None
 
 #Set function to calculate percent from angle
 def angle_to_percent (angle) :
@@ -18,30 +19,34 @@ def angle_to_percent (angle) :
     return start + angle_as_percent
 
 
-GPIO.setmode(GPIO.BOARD) #Use Board numerotation mode
-GPIO.setwarnings(False) #Disable warnings
+def setup () :
+    GPIO.setmode(GPIO.BOARD) #Use Board numerotation mode
+    GPIO.setwarnings(False) #Disable warnings
 
-#Use pin 12 for PWM signal
-pwm_gpio = 11
-frequence = 50
-GPIO.setup(pwm_gpio, GPIO.OUT)
-pwm = GPIO.PWM(pwm_gpio, frequence)
+    #Use pin 12 for PWM signal
+    pwm_gpio = 11
+    frequence = 50
+    GPIO.setup(pwm_gpio, GPIO.OUT)
+    pwm = GPIO.PWM(pwm_gpio, frequence)
+    
+    #Init at 0°
+    pwm.start(angle_to_percent(0))
+    time.sleep(1)
 
-#Init at 0°
-pwm.start(angle_to_percent(0))
-time.sleep(1)
+def enable_drs() :
+    #Go at 45°
+    pwm.ChangeDutyCycle(angle_to_percent(45))
+    print("DRS Enabled")
+    time.sleep(1)
+    #Close GPIO & cleanup
+    print("DRS Disabled")
 
-#Go at 45°
-pwm.ChangeDutyCycle(angle_to_percent(45))
-print("DRS Enabled")
-time.sleep(1)
+def disable_drs() :
+    #Back at 0°
+    pwm.start(angle_to_percent(0))
+    time.sleep(1)
 
-#Close GPIO & cleanup
-print("DRS Disabled")
 
-#Back at 0°
-pwm.start(angle_to_percent(0))
-time.sleep(1
-)
-pwm.stop()
-GPIO.cleanup()
+def stop() : 
+    pwm.stop()
+    GPIO.cleanup()
