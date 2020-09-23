@@ -6,7 +6,7 @@ import servo
 
 try:
     pwm = servo.setup()
-    servo.enable_drs(pwm, 45)
+    servo.enable_drs(pwm)
     servo.disable_drs(pwm)
     servo.stop(pwm)
 

@@ -2,6 +2,7 @@
 #-- coding: utf-8 --
 import RPi.GPIO as GPIO
 import time
+import config
 
 
 def setup():
@@ -9,8 +10,8 @@ def setup():
     GPIO.setwarnings(False) #Disable warnings
 
     #Use pin 12 for PWM signal
-    pwm_gpio = 11
-    frequency = 50
+    pwm_gpio = config.servos['right_servo_pin']
+    frequency = config.servos['frequency']
     GPIO.setup(pwm_gpio, GPIO.OUT)
     pwm = GPIO.PWM(pwm_gpio, frequency)
     
@@ -32,7 +33,7 @@ def angle_to_percent (angle):
     return start + angle_as_percent
 
 
-def enable_drs(pwm, angle):
+def enable_drs(pwm, angle=config.drs_angles['medium']):
     #Go at 45°
     pwm.ChangeDutyCycle(angle_to_percent(angle))
     print("DRS Enabled")
@@ -40,7 +41,7 @@ def enable_drs(pwm, angle):
 
 def disable_drs(pwm):
     #Back at 0°
-    pwm.start(angle_to_percent(0))
+    pwm.start(angle_to_percent(config.drs_angles['disabled']))
     print("DRS Disabled")
     time.sleep(1)
 
