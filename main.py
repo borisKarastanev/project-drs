@@ -1,12 +1,14 @@
 #!/usr/bin/env python3
 #-- coding: utf-8 --
-
+import RPi.GPIO as GPIO
+import time
 import servo
 
 try:
-    servo.setup()
-    servo.enable_drs()
-    servo.disable_drs()
-    servo.stop()
+    pwm = servo.setup()
+    servo.enable_drs(pwm, 45)
+    servo.disable_drs(pwm)
+    servo.stop(pwm)
+
 except:
     print("DRS Failed")
