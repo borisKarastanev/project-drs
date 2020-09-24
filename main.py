@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 #-- coding: utf-8 --
-import RPi.GPIO as GPIO
-import time
+
 import servo
 
 try:
@@ -10,5 +9,5 @@ try:
     servo.disable_drs(pwm)
     servo.stop(pwm)
 
-except:
-    print("DRS Failed")
+except Exception as error:
+    print("DRS Failed", error)

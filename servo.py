@@ -1,6 +1,13 @@
 #!/usr/bin/env python3
 #-- coding: utf-8 --
-import RPi.GPIO as GPIO
+try:
+    import RPi.GPIO as GPIO
+
+except ImportError as error:
+    print(f"Supported only on Raspberry Pi {error}")
+    raise error
+
+
 import time
 import config
 
@@ -22,7 +29,7 @@ def setup():
 #Set function to calculate percent from angle
 def angle_to_percent (angle):
     if angle > 180 or angle < 0 :
-        return False
+        raise ValueError("Please provide a valid angle between 0 - 180")
 
     start = 4
     end = 12.5
