@@ -14,7 +14,9 @@ import config
 class Servo:
     def __init__(self):
         self._pwm = self.setup()
-
+        
+        #Init at 0°
+        self.disable_drs()
 
     def setup(self):
         GPIO.setmode(GPIO.BOARD) #Use Board numerotation mode
@@ -25,9 +27,6 @@ class Servo:
         frequency = config.servos['frequency']
         GPIO.setup(pwm_gpio, GPIO.OUT)
         pwm = GPIO.PWM(pwm_gpio, frequency)
-        
-        #Init at 0°
-        self.disable_drs()
         return pwm
 
 
