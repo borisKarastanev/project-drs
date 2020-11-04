@@ -1,6 +1,7 @@
 
 servos = dict(
     right_servo_pin = 11,
+    left_servo_pin = 12,
     frequency = 50
 )
 
