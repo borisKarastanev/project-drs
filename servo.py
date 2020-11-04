@@ -29,6 +29,7 @@ class Servo:
         GPIO.setup(right_servo_gpio, GPIO.OUT)
 
         left_servo_gpio = config.servos['left_servo_pin']
+        GPIO.setup(left_servo_gpio, GPIO.OUT)
 
         right_pwm = GPIO.PWM(right_servo_gpio, frequency)
         left_pwm = GPIO.PWM(left_servo_gpio, frequency)
