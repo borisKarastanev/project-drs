@@ -57,7 +57,7 @@ class Servo:
     def enable_drs(self, angle=config.drs_angles['medium']):
         #Go at 45°
         
-        self._pwm['left_pwm'].ChangeDutyCycle(self._angle_to_percent(angle))
+        self._pwm['left_pwm'].ChangeDutyCycle(self._angle_to_percent(config.drs_angles['test2']))
         self._pwm['right_pwm'].ChangeDutyCycle(self._angle_to_percent(angle))
 
         print("DRS Enabled")
@@ -65,7 +65,7 @@ class Servo:
 
     def disable_drs(self):
         #Back at 0°
-        self._pwm['left_pwm'].start(self._angle_to_percent(config.drs_angles['disabled']))
+        self._pwm['left_pwm'].start(self._angle_to_percent(config.drs_angles['test']))
         self._pwm['right_pwm'].start(self._angle_to_percent(config.drs_angles['disabled']))
 
         print("DRS Disabled")

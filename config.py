@@ -6,6 +6,8 @@ servos = dict(
 )
 
 drs_angles = dict(
+    test = 180,
+    test2 = 135,
     disabled = 0,
     default = 30,
     medium = 45,
