@@ -15,11 +15,10 @@ class Servo:
     def __init__(self):
         self._pwm = self.setup()
         
-        #Init at 0°
-        self.disable_drs()
+        #Init at 45°
+        self.enable_drs()
 
     def setup(self):
-        GPIO.setmode(GPIO.BOARD) #Use Board numerotation mode
         GPIO.setwarnings(False) #Disable warnings
 
         frequency = config.servos['frequency']
@@ -54,22 +53,21 @@ class Servo:
         return start + angle_as_percent
 
 
-    def enable_drs(self, angle=config.drs_angles['medium']):
+    def disable_drs(self):
         #Go at 45°
         
-        self._pwm['left_pwm'].ChangeDutyCycle(self._angle_to_percent(config.drs_angles['test2']))
-        self._pwm['right_pwm'].ChangeDutyCycle(self._angle_to_percent(angle))
-
-        print("DRS Enabled")
-        time.sleep(1)
-
-    def disable_drs(self):
-        #Back at 0°
-        self._pwm['left_pwm'].start(self._angle_to_percent(config.drs_angles['test']))
-        self._pwm['right_pwm'].start(self._angle_to_percent(config.drs_angles['disabled']))
+        self._pwm['left_pwm'].ChangeDutyCycle(self._angle_to_percent(config.left_servo_drs_angles['disabled']))
+        self._pwm['right_pwm'].ChangeDutyCycle(self._angle_to_percent(config.right_servo_drs_angles['disabled']))
 
         print("DRS Disabled")
-        time.sleep(1)
+        
+
+    def enable_drs(self):
+        #Back at 0°
+        self._pwm['left_pwm'].start(self._angle_to_percent(config.left_servo_drs_angles['enabled']))
+        self._pwm['right_pwm'].start(self._angle_to_percent(config.right_servo_drs_angles['enabled']))
+
+        print("DRS Enabled")
 
 
     def stop(self):
